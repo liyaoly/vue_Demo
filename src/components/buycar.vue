@@ -44,6 +44,7 @@
 <script>
 // var imgUrl = require('./../../public/img2.jpg')
 import imgUrl from './../../public/img2.jpg'
+import bus from '@/assets/bus.js'
 export default {
   data () {
     return {
@@ -51,29 +52,34 @@ export default {
       checkList: [],
       totalNum: 0,
       totalPrice: 0,
-      list: [
-        {
-          id: 1,
-          name: '良品铺子',
-          othername: '坚果',
-          price: '156',
-          imgStr: require('./../../public/img1.jpg'),
-          num: '2',
-          caozuo: '删除',
-          check: false
-        },
-        {
-          id: 2,
-          name: '三只松鼠',
-          othername: '猪肉铺',
-          price: '158',
-          imgStr: imgUrl,
-          num: '2',
-          caozuo: '删除',
-          check: false
-        }
-      ]
+      list: []
     }
+  },
+  created () {
+    let listBefore = []
+    listBefore = [
+      {
+        id: 1,
+        name: '良品铺子',
+        othername: '坚果',
+        price: '156',
+        imgStr: require('./../../public/img1.jpg'),
+        num: '2',
+        caozuo: '删除',
+        check: false
+      },
+      {
+        id: 2,
+        name: '三只松鼠',
+        othername: '猪肉铺',
+        price: '158',
+        imgStr: imgUrl,
+        num: '2',
+        caozuo: '删除',
+        check: false
+      }
+    ]
+    this.list = listBefore
   },
   methods: {
     total () {
@@ -131,6 +137,16 @@ export default {
       } else {
         this.allcheck = false
       }
+    },
+    list: {
+      handler: function () {
+        let count = 0
+        this.list.map(item => {
+          count += parseInt(item.num)
+        })
+        bus.$emit('buycarCountChange', count)
+      },
+      deep: true
     }
   }
 }
