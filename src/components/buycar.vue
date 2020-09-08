@@ -42,9 +42,10 @@
 </template>
 
 <script>
-// var imgUrl = require('./../../public/img2.jpg')
-import imgUrl from './../../public/img2.jpg'
-import bus from '@/assets/bus.js'
+import { mapMutations, mapActions } from 'vuex'
+var imgUrl = require('./../../public/img2.jpg')
+// import imgUrl from './../../public/img2.jpg
+// import bus from '@/assets/bus.js'
 export default {
   data () {
     return {
@@ -82,6 +83,12 @@ export default {
     this.list = listBefore
   },
   methods: {
+    ...mapMutations([
+      'changebuycarCount'
+    ]),
+    ...mapActions([
+      'asyncChangebuycarCount'
+    ]),
     total () {
       let totalNum = 0
       let totalPrice = 0
@@ -144,7 +151,11 @@ export default {
         this.list.map(item => {
           count += parseInt(item.num)
         })
-        bus.$emit('buycarCountChange', count)
+        // bus.$emit('buycarCountChange', count)
+        // this.$store.commit('changebuycarCount', count)
+        // this.changebuycarCount(count)
+        // this.$store.dispatch('asyncChangebuycarCount', count)
+        this.asyncChangebuycarCount(count)
       },
       deep: true
     }

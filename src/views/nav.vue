@@ -25,6 +25,7 @@
 
 <script>
 import bus from '@/assets/bus.js'
+import { mapState } from 'vuex'
 export default {
   props: {
     NavActiveIndex: String
@@ -32,14 +33,17 @@ export default {
   data () {
     return {
       activeIndex: '1',
-      activeIndex2: '哈哈哈哈',
-      buycarCount: 0
+      activeIndex2: '哈哈哈哈'
+      // buycarCount: 0
     }
   },
   created () {
     bus.$on('buycarCountChange', (num) => {
       this.buycarCount = num
     })
+  },
+  computed: {
+    ...mapState(['buycarCount'])
   },
   methods: {
     clicknav () {
